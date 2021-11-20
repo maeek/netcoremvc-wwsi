@@ -18,8 +18,9 @@ namespace FilmDB
         try {
           ctx.SaveChanges();
         }
-        catch (DbUpdateException) {
+        catch (Exception) {
           filmModel.ID = 0;
+          ctx.Films.Add(filmModel);
           ctx.SaveChanges();
         }
       }
@@ -28,6 +29,12 @@ namespace FilmDB
 
     public FilmManager RemoveFilm(int id)
     {
+      using (var ctx = new FilmContext())
+      {
+        var film = ctx.FilmDB.SingleOrDefault(f => f.ID == id);
+        ctx.Films.Remove(film);
+        ctx.SaveChanges();
+      }
       return this;
     }
 
