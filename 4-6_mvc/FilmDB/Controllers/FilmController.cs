@@ -13,16 +13,56 @@ namespace FilmDB.Controllers
   {
     public IActionResult Index()
     {
-      FilmModel film = new FilmModel();
-      film.ID = 1;
-      film.Title = "Auta";
-      film.Year = 2007;
-
       FilmManager filmMan = new FilmManager();
+      var films = filmMan.GetFilms();
 
-      filmMan.AddFilm(film);
+      return View(films);
+    }
 
+    [HttpGet]
+    public IActionResult Add()
+    {
       return View();
+    }
+
+    [HttpPost]
+    public IActionResult Add(FilmModel film)
+    {
+      var manager = new FilmManager();
+      manager.AddFilm(film);
+      return RedirectToAction("Index");
+    }
+
+    [HttpGet]
+    public IActionResult Remove(int id)
+    {
+      var manager = new FilmManager();
+      var film = manager.GetFilm(id);
+      return View(film);
+    }
+
+    [HttpPost]
+    public IActionResult RemoveConfirm(int id)
+    {
+      var manager = new FilmManager();
+      manager.RemoveFilm(id);
+      return RedirectToAction("Index");
+    }
+
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+      var manager = new FilmManager();
+      var film = manager.GetFilm(id);
+      return View(film);
+    }
+
+    [HttpPost]
+    public IActionResult Edit(FilmModel film)
+    {
+      var manager = new FilmManager();
+      manager.UpdateFilm(film);
+      return RedirectToAction("Index");
     }
   }
 }

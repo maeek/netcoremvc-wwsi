@@ -34,7 +34,7 @@ namespace FilmDB
       using (var ctx = new FilmContext())
       {
         var film = ctx.Films.SingleOrDefault(f => f.ID == id);
-        ctx.Films.Remove(film);
+        ctx.Remove(film);
         ctx.SaveChanges();
       }
       return this;
@@ -44,9 +44,7 @@ namespace FilmDB
     {
       using (var ctx = new FilmContext())
       {
-        var film = ctx.Films.SingleOrDefault(f => f.ID == filmModel.ID);
-        film.Title = filmModel.Title;
-        film.Year = filmModel.Year;
+        ctx.Update(filmModel);
         ctx.SaveChanges();
       }
       return this;
@@ -54,12 +52,10 @@ namespace FilmDB
 
     public FilmManager ChangeTitle(int id, string newTitle)
     {
-      using (var ctx = new FilmContext())
-      {
-        var film = ctx.Films.SingleOrDefault(f => f.ID == id);
-        film.Title = newTitle;
-        ctx.SaveChanges();
-      }
+      var film = this.GetFilm(id);
+      film.Title = newTitle;
+      this.UpdateFilm(film);
+
       return this;
     }
 
