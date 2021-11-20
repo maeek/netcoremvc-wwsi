@@ -15,10 +15,12 @@ namespace FilmDB
       {
         ctx.Database.EnsureCreated();
         ctx.Films.Add(filmModel);
-        try {
+        try
+        {
           ctx.SaveChanges();
         }
-        catch (Exception) {
+        catch (Exception)
+        {
           filmModel.ID = 0;
           ctx.Films.Add(filmModel);
           ctx.SaveChanges();
@@ -31,7 +33,7 @@ namespace FilmDB
     {
       using (var ctx = new FilmContext())
       {
-        var film = ctx.FilmDB.SingleOrDefault(f => f.ID == id);
+        var film = ctx.Films.SingleOrDefault(f => f.ID == id);
         ctx.Films.Remove(film);
         ctx.SaveChanges();
       }
@@ -40,22 +42,41 @@ namespace FilmDB
 
     public FilmManager UpdateFilm(FilmModel filmModel)
     {
+      using (var ctx = new FilmContext())
+      {
+        var film = ctx.Films.SingleOrDefault(f => f.ID == filmModel.ID);
+        film.Title = filmModel.Title;
+        film.Year = filmModel.Year;
+        ctx.SaveChanges();
+      }
       return this;
     }
 
     public FilmManager ChangeTitle(int id, string newTitle)
     {
+      using (var ctx = new FilmContext())
+      {
+        var film = ctx.Films.SingleOrDefault(f => f.ID == id);
+        film.Title = newTitle;
+        ctx.SaveChanges();
+      }
       return this;
     }
 
-    public FilmManager GetFilm(int id)
+    public FilmModel GetFilm(int id)
     {
-      return null;
+      using (var ctx = new FilmContext())
+      {
+        return ctx.Films.SingleOrDefault(f => f.ID == id);
+      }
     }
 
     public List<FilmModel> GetFilms()
     {
-      return null;
+      using (var ctx = new FilmContext())
+      {
+        return ctx.Films.ToList();
+      }
     }
   }
 }
