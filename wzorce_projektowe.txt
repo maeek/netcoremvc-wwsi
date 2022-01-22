@@ -1,0 +1,37 @@
+Wzorce projektowe:
+
+Kompozyt może składać się z wielu komponentów, które są dziedziczone po klasie Component. Wszystkie komponenty posiadają wspólny interfejs,
+który zawiera metody do zarządzania swoim stanem.
+Jeżeli komponent agreguje wiele komponentów to w ten sposób można zapewnić łatwiejsze zarządzanie stanem.
+Przykład:
+- Klasa Produkt i Opakowanie dziedziczy po klasie Component.
+- W Opakowaniu może być więcej Opakowań/Produktów.
+- Klasa Component posiada metodę do zliczania sumy cen produktów.
+- Klasa Opakowanie sumuje wartości wszystkich Produktów.
+- Klasa Produkt zwraca jakąś wartość.
+
+Obserwator pozwala na obserwację zmian stanu komponentu bez robienia wielu zapytań aby sprawdzić czy stan się zmienił.
+Ten wzorzec deleguje powiadamianie o zmianie stanu komponentu do obserwatora, a klienci subskrybują do danego obserwatora.
+Przykład:
+- Klasa Process w dynamiczny sposób zwraca wartości z stdout.
+- Klasa Process jest obserwatorem.
+- Inne klasy mogą subskrybować zmiany w stanie Process.
+- Klasa Process powiadamia swoich subskrybentów o nowych wartościach.
+
+Strategia pozwala na zmianę implementacji klasy. (Strategia to behawioralny wzorzec projektowy pozwalający zdefiniować rodzinę algorytmów,
+umieścić je w osobnych klasach i uczynić obiekty tych klas wymienialnymi)
+Przykład:
+- Klasa Authentication wykonuje logowanie w zależności od strategii, standart, LDAP, OAuth, inne.
+- Strategia jest zmienną klasy Authentication.
+- Klasa Authentication może zmienić strategię w zależności od warunków.
+
+Metoda wytwórcza pozwala na tworzenie obiektów różnych typów ale opartych na jednej klasie/interfejsie.
+Przykład:
+Klasa DBConnection posiada metodę createDBConnection do tworzenia obiektów różnych typów (MySQL, Oracle, PostgreSQL),
+pod warunkiem że te klasy implementują wspólny interfejs.
+
+Dekorator pozwala na dodanie dodatkowych funkcjonalności do komponentu.
+Przykład:
+Klasa Notifyier posiada metodę sendNotification do wysyłania powiadomień do użytkowników.
+Może być to powiadomienie SMS, email, powiadomienie na telefon, powiadomienie na komputer, powiadomienie na konsole.
+Możemy dynamicznie dodawać i usuwać funkcjonalności klasy Notifyier, na które chcemy wysłać powiadomienia.
