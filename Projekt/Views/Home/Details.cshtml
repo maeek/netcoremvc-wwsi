@@ -1,0 +1,20 @@
+﻿@model Notes.Models.NoteModel
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>View "@Html.DisplayFor(model => model.Name)"</h1>
+
+<div>
+    <h4 class="text-muted">@Html.DisplayFor(model => model.Created)</h4>
+    <hr />
+    <dl class="row">
+        <textarea style="width: 90%; min-height: 40rem" readonly asp-for="Content" class="form-control">@Html.DisplayFor(modelItem => modelItem.Content)</textarea>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> | 
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Notes.Models.NoteModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="display-3">Your Notes</h1>
+<hr />
+<p>
+    <a asp-action="Add" class="text-decoration-none">
+        <button type="button" class="btn btn-success text-white">
+            Create New
+        </button>
+    </a>
+</p>
+<div class="card-deck">
+    @foreach (var item in Model)
+    {
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <a asp-action="Details" asp-route-id="@item.ID" class="text-decoration-none">
+                    <h5 class="card-title font-weight-bold">@Html.DisplayFor(modelItem => item.Name)</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelItem => item.Created)</h6>
+                </a>
+                <p class="card-text h-50">@Html.DisplayFor(modelItem => item.Content)</p>
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Remove" asp-route-id="@item.ID" class="text-decoration-none">
+                        <button type="button" class="btn btn-danger text-white">
+                            Remove
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
